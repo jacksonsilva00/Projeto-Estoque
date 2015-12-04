@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">ProjetoEstoque</string>
+    <!--
+    strings do APP
+    -->
+    <string name="list_produtos">Listar Produtos</string>
+    <string name="vender">Vender Produto</string>
+    <string name="cadastrar_novo">Cadastrar Novo Produto</string>
+    <string name="cadastrar">Cadastrar</string>
+    <string name="produto_nome">Nome do Produto</string>
+    <string name="produto_preco">Preço do Produto</string>
+    <string name="produto_qtd">Quantidade de Estoque do Produto</string>
+</resources>
