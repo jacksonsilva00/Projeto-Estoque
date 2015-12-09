@@ -17,6 +17,8 @@
         </activity>
         <activity android:name=".CadastrarProduto" >
         </activity>
+        <activity android:name=".ListarProdutos" >
+        </activity>
     </application>
 
 </manifest>

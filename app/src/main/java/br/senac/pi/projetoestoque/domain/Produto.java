@@ -1,10 +1,10 @@
 package br.senac.pi.projetoestoque.domain;
 
-/**
- * Created by Aluno on 04/12/2015.
- */
-public class Produto {
-    private long id;
+import java.io.Serializable;
+
+public class Produto implements Serializable {
+    private static final long serialVersionUID = 1L;
+    private Long id;
     private int quantidade;
     private double preco;
     private String nome;
@@ -33,11 +33,11 @@ public class Produto {
         this.nome = nome;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 }
