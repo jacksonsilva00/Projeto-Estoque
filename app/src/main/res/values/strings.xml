@@ -7,7 +7,9 @@
     <string name="vender">Vender Produto</string>
     <string name="cadastrar_novo">Cadastrar Novo Produto</string>
     <string name="cadastrar">Cadastrar</string>
-    <string name="produto_nome">Nome do Produto</string>
-    <string name="produto_preco">Preço do Produto</string>
-    <string name="produto_qtd">Quantidade de Estoque do Produto</string>
+    <string name="obrigatorio">Campos Obrigatorios *</string>
+    <string name="produto_nome">Nome do Produto *</string>
+    <string name="produto_preco">Preço do Produto *</string>
+    <string name="produto_qtd">Quantidade de Estoque do Produto *</string>
+    <string name="campos">Todos os Campos são Obrigatorios</string>
 </resources>

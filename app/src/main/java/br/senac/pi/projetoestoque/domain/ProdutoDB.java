@@ -19,12 +19,15 @@ public class ProdutoDB extends SQLiteOpenHelper {
     }
 
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("CREATE TABLE IF NOT EXISTS produto(id primary key autoincrement, nome TEXT UNIQUE NOT NULL ,preco DOUBLE NOT NULL, quantidade INTEGER NOT NULL);");
+        db.execSQL("CREATE TABLE IF NOT EXISTS produto(id integer primary key  autoincrement, nome TEXT,preco DOUBLE, quantidade INTEGER);");
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        //db.execSQL("ALTER TABLE produto ADD COLUMN descricao;");
+       /* String ddl = "DROP TABLE IF EXISTS produto";
+        db.execSQL(ddl);
+
+        this.onCreate(db);*/
     }
     public void salva(Produto produto){
 

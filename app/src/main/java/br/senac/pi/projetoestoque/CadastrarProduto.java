@@ -1,5 +1,6 @@
 package br.senac.pi.projetoestoque;
 
+import android.content.Intent;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 
@@ -11,6 +12,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import br.senac.pi.projetoestoque.domain.Produto;
+import br.senac.pi.projetoestoque.domain.ProdutoDB;
 
 public class CadastrarProduto extends AppCompatActivity implements View.OnClickListener {
     private EditText edtnome,edtpreco,edtquantidade;
@@ -23,6 +25,8 @@ public class CadastrarProduto extends AppCompatActivity implements View.OnClickL
         edtquantidade = (EditText) findViewById(R.id.edtquantidade);
         Button btnCadastrarProduto =(Button) findViewById(R.id.btnCadastrarProduto);
         btnCadastrarProduto.setOnClickListener(this);
+        Intent intent = getIntent();
+        final Produto produtoalterado = (Produto) intent.getSerializableExtra("produtoSelecionado");
     }
     public Produto produtoestoque(){
         Produto produto = new Produto();
@@ -39,9 +43,20 @@ public class CadastrarProduto extends AppCompatActivity implements View.OnClickL
         edtquantidade.setText(produtoalterar.getQuantidade());
     }
     public void onClick(View v) {
-        Toast.makeText(CadastrarProduto.this,R.string.app_name,Toast.LENGTH_SHORT).show();
+        //Toast.makeText(CadastrarProduto.this,R.string.app_name,Toast.LENGTH_SHORT).show();
+        String nomeproduto =edtnome.getText().toString();
+        String precoproduto =edtpreco.getText().toString();
+        String quantidadeProduto = edtquantidade.getText().toString();
+        if(nomeproduto ==null || precoproduto==null || quantidadeProduto==null || nomeproduto.equals("") || precoproduto.equals("") || quantidadeProduto.equals("")){
+            Toast.makeText(CadastrarProduto.this,R.string.campos,Toast.LENGTH_SHORT).show();
 
-        finish();
+        }else{
+            Produto produto = produtoestoque();
+            ProdutoDB db = new ProdutoDB(CadastrarProduto.this);
+            db.salva(produto);
+            db.close();
 
+            finish();
+        }
     }
 }
