@@ -20,5 +20,4 @@
         <activity android:name=".ListarProdutos" >
         </activity>
     </application>
-
 </manifest>

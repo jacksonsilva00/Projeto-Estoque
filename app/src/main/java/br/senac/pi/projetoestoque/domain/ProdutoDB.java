@@ -15,7 +15,7 @@ public class ProdutoDB extends SQLiteOpenHelper {
 
     public ProdutoDB(Context context) {
 
-        super(context,NOME_DB,null ,VERSAO_DB);
+        super(context, NOME_DB, null, VERSAO_DB);
     }
 
     public void onCreate(SQLiteDatabase db) {
@@ -52,6 +52,12 @@ public class ProdutoDB extends SQLiteOpenHelper {
             produtos.add(produto);
         }
         return produtos;
+    }
+    public void vender(Produto produto){
+            ContentValues values = new ContentValues();
+            values.put("preco",produto.getQuantidade() -1);
+            String[] args = {produto.getId().toString()};
+            getWritableDatabase().update("produto",values,"id=?",args);
     }
     public void deletar(Produto produto){
         String[] args = {produto.getId().toString()};

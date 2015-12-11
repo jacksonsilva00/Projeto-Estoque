@@ -16,6 +16,8 @@ import br.senac.pi.projetoestoque.domain.ProdutoDB;
 
 public class CadastrarProduto extends AppCompatActivity implements View.OnClickListener {
     private EditText edtnome,edtpreco,edtquantidade;
+    private boolean produtoalterado = false;
+    private Produto alterar;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,8 +27,14 @@ public class CadastrarProduto extends AppCompatActivity implements View.OnClickL
         edtquantidade = (EditText) findViewById(R.id.edtquantidade);
         Button btnCadastrarProduto =(Button) findViewById(R.id.btnCadastrarProduto);
         btnCadastrarProduto.setOnClickListener(this);
-        Intent intent = getIntent();
-        final Produto produtoalterado = (Produto) intent.getSerializableExtra("produtoSelecionado");
+        String p = getIntent().getStringExtra("produtoSelecionado");
+        //final Produto produtoparaseralterado = (Produto) intent.getSerializableExtra("produtoSelecionado");
+        /*if (produtoparaseralterado != null ){
+            btnCadastrarProduto.setText("Alterar");
+            this.alterar = produtoparaseralterado;
+            this.produtoalterado = true;
+
+        }*/
     }
     public Produto produtoestoque(){
         Produto produto = new Produto();
@@ -38,9 +46,9 @@ public class CadastrarProduto extends AppCompatActivity implements View.OnClickL
         return produto;
     }
     public void alterarproduto(Produto produtoalterar){
-        edtnome.setText(produtoalterar.getNome());
+        edtnome.setText(produtoalterar.getNome().toString());
         edtpreco.setText(String.valueOf(produtoalterar.getPreco()));
-        edtquantidade.setText(produtoalterar.getQuantidade());
+        edtquantidade.setText(String.valueOf(produtoalterar.getQuantidade()));
     }
     public void onClick(View v) {
         //Toast.makeText(CadastrarProduto.this,R.string.app_name,Toast.LENGTH_SHORT).show();
@@ -53,7 +61,15 @@ public class CadastrarProduto extends AppCompatActivity implements View.OnClickL
         }else{
             Produto produto = produtoestoque();
             ProdutoDB db = new ProdutoDB(CadastrarProduto.this);
-            db.salva(produto);
+            if(produtoalterado){
+                alterarproduto(alterar);
+                this.alterar = null;
+                this.produtoalterado=false;
+            }else{
+                db.salva(produto);
+            }
+
+
             db.close();
 
             finish();
