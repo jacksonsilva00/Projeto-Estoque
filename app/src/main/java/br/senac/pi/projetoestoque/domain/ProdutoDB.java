@@ -37,6 +37,7 @@ public class ProdutoDB extends SQLiteOpenHelper {
         values.put("quantidade",produto.getQuantidade());
 
         getWritableDatabase().insert("produto",null,values);
+        getWritableDatabase().close();
     }
 
     public List<Produto> getLista() {
@@ -51,6 +52,7 @@ public class ProdutoDB extends SQLiteOpenHelper {
             produto.setQuantidade(cursor.getInt(3));
             produtos.add(produto);
         }
+        getWritableDatabase().close();
         return produtos;
     }
     public void vender(Produto produto){
@@ -58,18 +60,21 @@ public class ProdutoDB extends SQLiteOpenHelper {
             values.put("preco",produto.getQuantidade() -1);
             String[] args = {produto.getId().toString()};
             getWritableDatabase().update("produto",values,"id=?",args);
+        getWritableDatabase().close();
     }
     public void deletar(Produto produto){
         String[] args = {produto.getId().toString()};
         getWritableDatabase().delete("produto","id=?",args);
+        getWritableDatabase().close();
     }
     public void alterar(Produto produto){
         ContentValues values = new ContentValues();
         values.put("nome",produto.getNome());
-        values.put("preco",produto.getPreco());
+        values.put("preco", produto.getPreco());
         values.put("quantidade",produto.getQuantidade());
         String[] args = {produto.getId().toString()};
         getWritableDatabase().update("produto",values,"id=?",args);
+        getWritableDatabase().close();
     }
 
 }

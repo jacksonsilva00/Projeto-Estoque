@@ -9,7 +9,16 @@ public class Produto implements Serializable {
     private double preco;
     private String nome;
 
-    @Override
+    public Produto(){
+
+    }
+    public Produto(Long id, int quantidade, String nome, double preco) {
+        this.id = id;
+        this.quantidade = quantidade;
+        this.nome = nome;
+        this.preco = preco;
+    }
+
     public String toString() {
         return this.nome;
         //return super.toString();

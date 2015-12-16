@@ -1,5 +1,7 @@
 package br.senac.pi.projetoestoque;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -23,6 +25,7 @@ import br.senac.pi.projetoestoque.domain.ProdutoDB;
 public class ListarProdutos extends AppCompatActivity {
     private ListView lista;
     private Produto produto;
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_listar_produtos);
@@ -40,7 +43,6 @@ public class ListarProdutos extends AppCompatActivity {
         });
         lista.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
 
-            @Override
             public boolean onItemLongClick(AdapterView<?> adapter, View view, int posicao, long id) {
 
                 produto = (Produto) adapter.getItemAtPosition(posicao);
@@ -54,22 +56,22 @@ public class ListarProdutos extends AppCompatActivity {
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
 
-        MenuItem vender = menu.add("vender");
+        MenuItem vender = menu.add(R.string.venda);
         vender.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                if (produto.getQuantidade() > 0){
+                if (produto.getQuantidade() > 0) {
                     ProdutoDB db = new ProdutoDB(ListarProdutos.this);
                     db.vender(produto);
                     db.close();
-                    Toast.makeText(ListarProdutos.this,"item vendido",Toast.LENGTH_SHORT).show();
-                }else {
-                    Toast.makeText(ListarProdutos.this,"item não disponivel no estoque",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ListarProdutos.this, R.string.venda_produto, Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(ListarProdutos.this, R.string.venda_indisponivel, Toast.LENGTH_SHORT).show();
                 }
                 return false;
             }
         });
-        MenuItem deletar = menu.add("deletar");
+        MenuItem deletar = menu.add(R.string.deletar);
         deletar.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
@@ -77,7 +79,7 @@ public class ListarProdutos extends AppCompatActivity {
                 db.deletar(produto);
                 db.close();
                 carregaLista();
-                Toast.makeText(ListarProdutos.this,"item deletado",Toast.LENGTH_SHORT).show();
+                Toast.makeText(ListarProdutos.this, R.string.deletado, Toast.LENGTH_SHORT).show();
                 return false;
             }
         });
@@ -96,12 +98,13 @@ public class ListarProdutos extends AppCompatActivity {
         super.onResume();
         carregaLista();
     }
-    private void carregaLista(){
+
+    private void carregaLista() {
         ProdutoDB db = new ProdutoDB(this);
         List<Produto> produtos = db.getLista();
         db.close();
         int layout = android.R.layout.simple_list_item_1;
-        ArrayAdapter<Produto> adapter = new ArrayAdapter<Produto>(this,layout,produtos);
+        ArrayAdapter<Produto> adapter = new ArrayAdapter<Produto>(this, layout, produtos);
         lista.setAdapter(adapter);
     }
 }

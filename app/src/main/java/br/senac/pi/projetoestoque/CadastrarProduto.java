@@ -1,23 +1,20 @@
 package br.senac.pi.projetoestoque;
 
-import android.content.Intent;
-import android.support.v4.app.NavUtils;
-import android.support.v7.app.AppCompatActivity;
 
+import android.content.Intent;
+import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import br.senac.pi.projetoestoque.domain.Produto;
 import br.senac.pi.projetoestoque.domain.ProdutoDB;
 
 public class CadastrarProduto extends AppCompatActivity implements View.OnClickListener {
     private EditText edtnome,edtpreco,edtquantidade;
-    private boolean produtoalterado = false;
-    private Produto alterar;
+    private boolean booleanproduto = true;
+    private Produto produtoalterar,pegaproduto;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,52 +24,47 @@ public class CadastrarProduto extends AppCompatActivity implements View.OnClickL
         edtquantidade = (EditText) findViewById(R.id.edtquantidade);
         Button btnCadastrarProduto =(Button) findViewById(R.id.btnCadastrarProduto);
         btnCadastrarProduto.setOnClickListener(this);
-        String p = getIntent().getStringExtra("produtoSelecionado");
-        //final Produto produtoparaseralterado = (Produto) intent.getSerializableExtra("produtoSelecionado");
-        /*if (produtoparaseralterado != null ){
-            btnCadastrarProduto.setText("Alterar");
-            this.alterar = produtoparaseralterado;
-            this.produtoalterado = true;
-
-        }*/
+        Intent intent = getIntent();
+        final Produto alterarproduto = (Produto) intent.getSerializableExtra("produtoSelecionado");
+        produtoalterar = alterarproduto;
+        if (alterarproduto != null){
+            btnCadastrarProduto.setText(R.string.alterar);
+            edtnome.setText(alterarproduto.getNome().toString());
+            edtpreco.setText(String.valueOf(alterarproduto.getPreco()));
+            edtquantidade.setText(String.valueOf(alterarproduto.getQuantidade()));
+        }
     }
-    public Produto produtoestoque(){
-        Produto produto = new Produto();
-
+    public Produto produtoestoque(Produto produto){
         produto.setNome(edtnome.getText().toString());
         produto.setPreco(Double.parseDouble(edtpreco.getText().toString()));
         produto.setQuantidade(Integer.parseInt(edtquantidade.getText().toString()));
 
         return produto;
     }
-    public void alterarproduto(Produto produtoalterar){
-        edtnome.setText(produtoalterar.getNome().toString());
-        edtpreco.setText(String.valueOf(produtoalterar.getPreco()));
-        edtquantidade.setText(String.valueOf(produtoalterar.getQuantidade()));
-    }
     public void onClick(View v) {
-        //Toast.makeText(CadastrarProduto.this,R.string.app_name,Toast.LENGTH_SHORT).show();
+        pegaproduto = new Produto();
+        ProdutoDB database = new ProdutoDB(CadastrarProduto.this);
         String nomeproduto =edtnome.getText().toString();
         String precoproduto =edtpreco.getText().toString();
         String quantidadeProduto = edtquantidade.getText().toString();
         if(nomeproduto ==null || precoproduto==null || quantidadeProduto==null || nomeproduto.equals("") || precoproduto.equals("") || quantidadeProduto.equals("")){
             Toast.makeText(CadastrarProduto.this,R.string.campos,Toast.LENGTH_SHORT).show();
-
         }else{
-            Produto produto = produtoestoque();
-            ProdutoDB db = new ProdutoDB(CadastrarProduto.this);
-            if(produtoalterado){
-                alterarproduto(alterar);
-                this.alterar = null;
-                this.produtoalterado=false;
+
+            if(booleanproduto == false){
+
+                Produto produto = produtoestoque(pegaproduto);
+                database.salva(produto);
+                database.close();
+                finish();
             }else{
-                db.salva(produto);
+                database.alterar(produtoestoque(produtoalterar));
+                produtoalterar = null;
+                booleanproduto=false;
+                database.close();
+                finish();
             }
 
-
-            db.close();
-
-            finish();
         }
     }
 }

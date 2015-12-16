@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">Projeto Estoque</string>
+    <!--
+    strings do APP
+    -->
+    <string name="list_produtos">Products list</string>
+    <string name="vender">Sell Products</string>
+    <string name="cadastrar_novo">Register New Product</string>
+    <string name="cadastrar">Register</string>
+    <string name="obrigatorio">Required fields *</string>
+    <string name="produto_nome">Products name *</string>
+    <string name="produto_preco">Product price *</string>
+    <string name="produto_qtd">Product Inventory Quantity *</string>
+    <string name="campos">All fields are mandatory</string>
+    <string name="venda_produto">product sold</string>
+    <string name="venda_indisponivel">Product not available in stock</string>
+    <string name="deletado">deleted product</string>
+    <string name="deletar">delete</string>
+    <string name="venda">sell</string>
+    <string name="alterar">Change</string>
+</resources>

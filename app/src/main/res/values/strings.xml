@@ -12,4 +12,10 @@
     <string name="produto_preco">Preço do Produto *</string>
     <string name="produto_qtd">Quantidade de Estoque do Produto *</string>
     <string name="campos">Todos os Campos são Obrigatorios</string>
+    <string name="venda_produto">item vendido</string>
+    <string name="venda_indisponivel">Produto não disponivel no estoque</string>
+    <string name="deletado">Produto deletado</string>
+    <string name="deletar">deletar</string>
+    <string name="venda">vender</string>
+    <string name="alterar">Alterar</string>
 </resources>
