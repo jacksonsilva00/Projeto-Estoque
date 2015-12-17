@@ -18,4 +18,6 @@
     <string name="deletar">deletar</string>
     <string name="venda">vender</string>
     <string name="alterar">Alterar</string>
+    <string name="incompleto">incompleto</string>
+    <string name="produtosvendidos">Listar Produtos Vendidos</string>
 </resources>

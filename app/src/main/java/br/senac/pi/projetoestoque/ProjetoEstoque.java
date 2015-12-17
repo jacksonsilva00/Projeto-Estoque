@@ -5,11 +5,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 
 public class ProjetoEstoque extends AppCompatActivity {
 
-    private Button btnCadastrar, btnListar;
+    private Button btnCadastrar, btnListar,btnprodutolistar;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -19,6 +20,8 @@ public class ProjetoEstoque extends AppCompatActivity {
         btnCadastrar.setOnClickListener(cadastrar());
         btnListar = (Button) findViewById(R.id.btnListar);
         btnListar.setOnClickListener(listarproduto());
+        btnprodutolistar = (Button) findViewById(R.id.btnprodutos);
+        btnprodutolistar.setOnClickListener(produtolistar());
     }
 
     public View.OnClickListener cadastrar() {
@@ -36,6 +39,15 @@ public class ProjetoEstoque extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(ProjetoEstoque.this, ListarProdutos.class);
                 startActivity(intent);
+            }
+        };
+    }
+    public View.OnClickListener produtolistar(){
+        return new View.OnClickListener(){
+            public void onClick(View v) {
+                Toast.makeText(ProjetoEstoque.this,R.string.incompleto,Toast.LENGTH_SHORT).show();
+                /*Intent intent = new Intent(ProjetoEstoque.this,Produtos.class);
+                startActivity(intent);*/
             }
         };
     }

@@ -28,6 +28,7 @@ public class CadastrarProduto extends AppCompatActivity implements View.OnClickL
         final Produto alterarproduto = (Produto) intent.getSerializableExtra("produtoSelecionado");
         produtoalterar = alterarproduto;
         if (alterarproduto != null){
+            booleanproduto = false;
             btnCadastrarProduto.setText(R.string.alterar);
             edtnome.setText(alterarproduto.getNome().toString());
             edtpreco.setText(String.valueOf(alterarproduto.getPreco()));
@@ -51,16 +52,15 @@ public class CadastrarProduto extends AppCompatActivity implements View.OnClickL
             Toast.makeText(CadastrarProduto.this,R.string.campos,Toast.LENGTH_SHORT).show();
         }else{
 
-            if(booleanproduto == false){
-
-                Produto produto = produtoestoque(pegaproduto);
-                database.salva(produto);
+            if(booleanproduto){
+                Produto produtonovo = produtoestoque(pegaproduto);
+                database.salva(produtonovo);
                 database.close();
                 finish();
             }else{
                 database.alterar(produtoestoque(produtoalterar));
                 produtoalterar = null;
-                booleanproduto=false;
+                booleanproduto=true;
                 database.close();
                 finish();
             }

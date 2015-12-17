@@ -1,7 +1,5 @@
 package br.senac.pi.projetoestoque;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,11 +10,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
-
-import java.util.ArrayList;
 import java.util.List;
 
 import br.senac.pi.projetoestoque.domain.Produto;
@@ -33,7 +28,6 @@ public class ListarProdutos extends AppCompatActivity {
         lista = (ListView) findViewById(R.id.lista);
         registerForContextMenu(lista);
         lista.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
             public void onItemClick(AdapterView<?> adapter, View view, int position, long id) {
                 Produto produtoclicado = (Produto) adapter.getItemAtPosition(position);
                 Intent intent = new Intent(ListarProdutos.this, CadastrarProduto.class);
@@ -53,17 +47,16 @@ public class ListarProdutos extends AppCompatActivity {
         });
     }
 
-    @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
 
         MenuItem vender = menu.add(R.string.venda);
         vender.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-            @Override
             public boolean onMenuItemClick(MenuItem item) {
                 if (produto.getQuantidade() > 0) {
                     ProdutoDB db = new ProdutoDB(ListarProdutos.this);
                     db.vender(produto);
                     db.close();
+                    carregaLista();
                     Toast.makeText(ListarProdutos.this, R.string.venda_produto, Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(ListarProdutos.this, R.string.venda_indisponivel, Toast.LENGTH_SHORT).show();
@@ -86,14 +79,12 @@ public class ListarProdutos extends AppCompatActivity {
         super.onCreateContextMenu(menu, v, menuInfo);
     }
 
-    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.lista_produto, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
-    @Override
     protected void onResume() {
         super.onResume();
         carregaLista();
