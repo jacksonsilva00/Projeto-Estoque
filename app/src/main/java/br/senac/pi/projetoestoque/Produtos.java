@@ -14,11 +14,14 @@ import br.senac.pi.projetoestoque.domain.Produto;
 import br.senac.pi.projetoestoque.domain.ProdutoDB;
 
 public class Produtos extends AppCompatActivity {
-    private ListView lista2;
+    //private ListView lista2;
+
+    // não concluido
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_produtos);
-        lista2 = (ListView) findViewById(R.id.lista2);
+        /*lista2 = (ListView) findViewById(R.id.lista2);
         registerForContextMenu(lista2);
         lista2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> adapter, View view, int position, long id) {
@@ -27,9 +30,9 @@ public class Produtos extends AppCompatActivity {
                 intent.putExtra("produtoSelecionado", detalhesproduto);
                 startActivity(intent);
             }
-        });
+        });*/
     }
-    protected void onResume() {
+    /*protected void onResume() {
         super.onResume();
         carregaLista();
     }
@@ -41,6 +44,6 @@ public class Produtos extends AppCompatActivity {
         int layout = android.R.layout.simple_list_item_1;
         ArrayAdapter<Produto> adapter = new ArrayAdapter<Produto>(this, layout, produtos);
         lista2.setAdapter(adapter);
-    }
+    }*/
 
 }

@@ -12,6 +12,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
+
 import java.util.List;
 
 import br.senac.pi.projetoestoque.domain.Produto;
@@ -20,6 +21,7 @@ import br.senac.pi.projetoestoque.domain.ProdutoDB;
 public class ListarProdutos extends AppCompatActivity {
     private ListView lista;
     private Produto produto;
+    int numerodevendas = 1;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,8 +31,11 @@ public class ListarProdutos extends AppCompatActivity {
         registerForContextMenu(lista);
         lista.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> adapter, View view, int position, long id) {
+                // criando um produto serializado
+                // um cast do produto serializado
                 Produto produtoclicado = (Produto) adapter.getItemAtPosition(position);
                 Intent intent = new Intent(ListarProdutos.this, CadastrarProduto.class);
+                // manda o produto serializado para poder modificar o produto diretamente na proxima classe.
                 intent.putExtra("produtoSelecionado", produtoclicado);
                 startActivity(intent);
             }
@@ -38,12 +43,10 @@ public class ListarProdutos extends AppCompatActivity {
         lista.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
 
             public boolean onItemLongClick(AdapterView<?> adapter, View view, int posicao, long id) {
-
+                //pega a posição do produto
                 produto = (Produto) adapter.getItemAtPosition(posicao);
-
                 return false;
             }
-
         });
     }
 
@@ -54,7 +57,10 @@ public class ListarProdutos extends AppCompatActivity {
             public boolean onMenuItemClick(MenuItem item) {
                 if (produto.getQuantidade() > 0) {
                     ProdutoDB db = new ProdutoDB(ListarProdutos.this);
-                    db.vender(produto);
+                    //numero de vendas do produto , a venda por enquanto e apenas 1 de cada vez
+                    //isso facilita uma futura modificação futura
+                    //receber um parametro do usuario e mandar esse paramentro para esse metodo resolver
+                    db.vender(produto, numerodevendas);
                     db.close();
                     carregaLista();
                     Toast.makeText(ListarProdutos.this, R.string.venda_produto, Toast.LENGTH_SHORT).show();
@@ -66,7 +72,6 @@ public class ListarProdutos extends AppCompatActivity {
         });
         MenuItem deletar = menu.add(R.string.deletar);
         deletar.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-            @Override
             public boolean onMenuItemClick(MenuItem item) {
                 ProdutoDB db = new ProdutoDB(ListarProdutos.this);
                 db.deletar(produto);
